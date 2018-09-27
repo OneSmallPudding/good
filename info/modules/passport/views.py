@@ -10,6 +10,7 @@ from info.utils.captcha.pic_captcha import captcha
 from info.utils.response_code import RET, error_map
 
 
+# 图片验证码
 @blu_passport.route('/get_img_code')
 def get_img_code():
     # 1获取数据
@@ -32,6 +33,7 @@ def get_img_code():
     return response
 
 
+# 短信验证码
 @blu_passport.route('/get_sms_code', methods=['POST'])
 def get_sms_code():
     # １获取数据
@@ -60,7 +62,7 @@ def get_sms_code():
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
-    if  user:
+    if user:
         return jsonify(errno=RET.DATAERR, errmsg='用户已存在')
     # ４发送短信
     # 随机吗
@@ -82,6 +84,7 @@ def get_sms_code():
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
 
 
+# 用户注册
 @blu_passport.route('/register', methods=['POST'])
 def register():
     # １获取参数
@@ -120,4 +123,37 @@ def register():
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
     session['user_id'] = user.id
     # ６返回结果
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+# 用户登陆
+@blu_passport.route('/login',methods=['POST'])
+def login():
+    # 请求参数
+    mobile = request.json.get('mobile')
+    password = request.json.get('password')
+    # 验证参数
+    if not all([mobile, password]):
+        print('1')
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    # 验证手机号
+    if not re.match('1[35678]\d{9}$', mobile):
+        print('2')
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    # 判断用户是否存在
+    try:
+        user = User.query.filter_by(mobile=mobile).first()
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    if not user:
+        return jsonify(errno=RET.DATAERR, errmsg='用户已存在')
+    # 验证密码
+    if not user.check_password(password):
+        return jsonify(errno=RET.PARAMERR, errmsg='密码错误')
+    # 记录最后登录时间(保存到是一个日期对象)
+    user.last_login = datetime.now()
+    # 状态保持（免密码登录）  保存用户的主键， 就可以取出用户的所有信息
+    session["user_id"] = user.id
+    # 返回
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

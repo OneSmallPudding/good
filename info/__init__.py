@@ -35,6 +35,8 @@ def create_app(type):
     Migrate(app, db)
     from info.modules.home import blu_home
     app.register_blueprint(blu_home)
+    from info.modules.passport import blu_passport
+    app.register_blueprint(blu_passport)
     setup_log(config_class.LOG_TYPE)
     import info.models
     return app

@@ -127,7 +127,7 @@ def register():
 
 
 # 用户登陆
-@blu_passport.route('/login',methods=['POST'])
+@blu_passport.route('/login', methods=['POST'])
 def login():
     # 请求参数
     mobile = request.json.get('mobile')
@@ -156,4 +156,11 @@ def login():
     # 状态保持（免密码登录）  保存用户的主键， 就可以取出用户的所有信息
     session["user_id"] = user.id
     # 返回
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+# 用户退出登陆
+@blu_passport.route('/logout')
+def logout():
+    session.pop('user_id', None)
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

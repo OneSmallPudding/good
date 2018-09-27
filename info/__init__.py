@@ -27,7 +27,7 @@ def set_log(log_level):
 def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂模式
     '''创建ａｐｐ'''
     config_class = config_dict[config_type]
-    app = Flask(__name__)
+    app = Flask(__name__,static_folder='static')
     # 用对象加载配置信息
     app.config.from_object(config_class)
     global db, sr

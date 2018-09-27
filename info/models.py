@@ -60,7 +60,7 @@ class User(BaseModel, db.Model):
 
     @property
     def password(self):
-        raise ArithmeticError('属性不可见')
+        raise AttributeError('属性不可读')
 
     @password.setter
     def password(self, value):

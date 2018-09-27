@@ -1,7 +1,9 @@
 import random
 import re
-from flask import request, abort, current_app, jsonify, make_response, Response, session
+from datetime import datetime
+from flask import request, abort, current_app, make_response, Response, jsonify, session
 from info import sr, db
+from info.lib.yuntongxun.sms import CCP
 from info.models import User
 from info.modules.passport import blu_passport
 from info.utils.captcha.pic_captcha import captcha
@@ -10,93 +12,105 @@ from info.utils.response_code import RET, error_map
 
 @blu_passport.route('/get_img_code')
 def get_img_code():
-    # 获取参数
-    img_code_id = request.args.get("img_code_id")
-    # 判断获取的参数
+    # 1获取数据
+    img_code_id = request.args.get('img_code_id')
+    # 验证下前段发的是否是个空的
     if not img_code_id:
         return abort(403)
-    # 生成图片验证码
+    # ２生成图片
     img_name, img_text, img_bytes = captcha.generate_captcha()
-    current_app.logger.error(img_text)
-    # 保存验证码文字
+    # ３保存图片文字部分和图片的ｋ
     try:
-        sr.set("img_code_id" + img_code_id, img_text, ex=120)
+        sr.set('img_code_id' + img_code_id, img_text, ex=100)
     except BaseException as e:
         current_app.logger.error(e)
         return abort(500)
-    # 设置响应头,改变响应的格式
+    # ４发送图片
+    # 自定义相应对象
     response = make_response(img_bytes)  # type:Response
     response.content_type = 'image/jpeg'
-    # 发送验证码
     return response
 
 
 @blu_passport.route('/get_sms_code', methods=['POST'])
 def get_sms_code():
-    # 获取参数
+    # １获取数据
     mobile = request.json.get('mobile')
     img_code = request.json.get('img_code')
     img_code_id = request.json.get('img_code_id')
-    # 验证参数
-    if not all([mobile, img_code, img_code_id]):
+    # 判断前端数据
+    if not all([mobile, img_code_id, img_code]):
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
-    # 验证,正则手机号
     if not re.match('1[35678]\d{9}$', mobile):
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
-    # 根据图片的k取出验证码
+    # ２根据图片ｋ取出图片验证码
     try:
         real_img_code = sr.get('img_code_id' + img_code_id)
     except BaseException as e:
         current_app.logger.error(e)
-        return jsonify(errno=RET.DBERR, errmg=error_map[RET.DBERR])
-    # 验证验证码是否过期
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    # 3验证图片验证码是否正确和是否过期
     if not real_img_code:
-        return jsonify(errno=RET.PARAMERR, errmsg='验证码过期')
-    # 验证验证码
+        return jsonify(errno=RET.PARAMERR, errmsg='验证码已过期')
     if real_img_code != img_code.upper():
         return jsonify(errno=RET.PARAMERR, errmsg='验证码错误')
-
-    # 生成短信
-    sms_code = '%06d' % random.randint(0, 999999)
-    current_app.logger.error(sms_code)
-    # 保存短信验证码
+    # 验证用户是否存在
     try:
-        sr.set("sms_code_id" + mobile, sms_code, ex=90)
+        user = User.query.filter_by(mobile=mobile).first()
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
-    # 返回短信验证码
+    if  user:
+        return jsonify(errno=RET.DATAERR, errmsg='用户已存在')
+    # ４发送短信
+    # 随机吗
+    sms_code = '%06d' % random.randint(0, 999999)
+    current_app.logger.error('短信验证码是%s' % sms_code)
+    # 注意：
+    #  测试的短信模板编号为1
+    # response_code = CCP().send_template_sms(mobile, [sms_code, 5], 1)
+    # if response_code == 0:
+    #     return jsonify(errno=RET.THIRDERR, errmsg=error_map[RET.THIRDERR])
+    # ５保存短信验证码
+    try:
+        # sr.set('sms_code_id' + mobile, sms_code, ex=2000)
+        sr.set('sms_code_id' + mobile, sms_code, ex=7000)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    # ６返回发送结果
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
 
 
 @blu_passport.route('/register', methods=['POST'])
 def register():
-    # 获取参数
+    # １获取参数
     mobile = request.json.get('mobile')
     password = request.json.get('password')
     sms_code = request.json.get('sms_code')
-    # 验证参数
+    # ２验证参数
     if not all([mobile, password, sms_code]):
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
-    # 验证手机号
     if not re.match('1[35678]\d{9}$', mobile):
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
-    # 获取短信验证
+    # 3根据手机号取出短信验证码
     try:
-        real_sms_code = sr.get("sms_code_id" + mobile)
+        # sr.set('sms_code_id' + mobile, sms_code, ex=7000)
+        real_sms_code = sr.get('sms_code_id' + mobile)
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
-    # 验证
+    # ４验证短信验证码
     if not real_sms_code:
         return jsonify(errno=RET.PARAMERR, errmsg='验证码过期')
     if real_sms_code != sms_code:
         return jsonify(errno=RET.PARAMERR, errmsg='验证码错误')
-    # 保存
+    # ５保存数据
     user = User()
     user.mobile = mobile
     user.password = password
     user.nick_name = mobile
+    user.last_login = datetime.now()
     try:
         db.session.add(user)
         db.session.commit()
@@ -105,5 +119,5 @@ def register():
         db.session.rollback()
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
     session['user_id'] = user.id
-    # 返回
+    # ６返回结果
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

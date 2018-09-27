@@ -3,7 +3,8 @@ from info import sr
 import logging
 
 # 2蓝图注册路由
-from info.models import User
+from info.constants import CLICK_RANK_MAX_NEWS
+from info.models import User, Category, News
 from info.modules.home import blu_home
 
 
@@ -17,7 +18,14 @@ def index():
         except BaseException as e:
             current_app.logger.error(e)
     user = user.to_dict() if user else None
-    return render_template('index.html', user=user)
+    # 查询前10的新闻
+    news_list = []
+    try:
+        news_list = News.query.order_by(News.clicks.desc()).limit(CLICK_RANK_MAX_NEWS).all()
+    except BaseException as e:
+        current_app.logger.error(e)
+    news_list = [news.to_basic_dict() for news in news_list]
+    return render_template('index.html', user=user, news_list=news_list)
     # return '1111'
 
 

@@ -6,6 +6,7 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from redis import StrictRedis
 from config import config_dict
+from info.common import func_index_convert
 
 db = None  # type:SQLAlchemy
 sr = None  # type:StrictRedis
@@ -50,4 +51,6 @@ def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂
     # 关联模型
     # from info.models import *  #函数内部不能用ｆｒｏｍ　　ｉｍｐｏｒｔ　　*
     import info.models
+    #注册过滤器
+    app.add_template_filter(func_index_convert,'index_convert')
     return app

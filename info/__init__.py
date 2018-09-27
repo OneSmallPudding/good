@@ -29,7 +29,7 @@ def create_app(type):
     global db, sr
     db = SQLAlchemy(app)
     config_class = type_dict[type]
-    sr = StrictRedis(host=config_class.REDIS_HOST, port=config_class.REDIS_PORT)
+    sr = StrictRedis(host=config_class.REDIS_HOST, port=config_class.REDIS_PORT,decode_responses=True)
     app.config.from_object(config_class)
     Session(app)
     Migrate(app, db)

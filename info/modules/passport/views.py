@@ -1,9 +1,8 @@
 import random
 import re
-
-from flask import request, abort, current_app, jsonify, make_response, Response
-
-from info import sr
+from flask import request, abort, current_app, jsonify, make_response, Response, session
+from info import sr, db
+from info.models import User
 from info.modules.passport import blu_passport
 from info.utils.captcha.pic_captcha import captcha
 from info.utils.response_code import RET, error_map
@@ -40,11 +39,9 @@ def get_sms_code():
     img_code_id = request.json.get('img_code_id')
     # 验证参数
     if not all([mobile, img_code, img_code_id]):
-        print('1')
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     # 验证,正则手机号
     if not re.match('1[35678]\d{9}$', mobile):
-        print('2')
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     # 根据图片的k取出验证码
     try:
@@ -62,5 +59,51 @@ def get_sms_code():
     # 生成短信
     sms_code = '%06d' % random.randint(0, 999999)
     current_app.logger.error(sms_code)
+    # 保存短信验证码
+    try:
+        sr.set("sms_code_id" + mobile, sms_code, ex=90)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
     # 返回短信验证码
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+@blu_passport.route('/register', methods=['POST'])
+def register():
+    # 获取参数
+    mobile = request.json.get('mobile')
+    password = request.json.get('password')
+    sms_code = request.json.get('sms_code')
+    # 验证参数
+    if not all([mobile, password, sms_code]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    # 验证手机号
+    if not re.match('1[35678]\d{9}$', mobile):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    # 获取短信验证
+    try:
+        real_sms_code = sr.get("sms_code_id" + mobile)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    # 验证
+    if not real_sms_code:
+        return jsonify(errno=RET.PARAMERR, errmsg='验证码过期')
+    if real_sms_code != sms_code:
+        return jsonify(errno=RET.PARAMERR, errmsg='验证码错误')
+    # 保存
+    user = User()
+    user.mobile = mobile
+    user.password = password
+    user.nick_name = mobile
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except BaseException as e:
+        current_app.logger.error(e)
+        db.session.rollback()
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    session['user_id'] = user.id
+    # 返回
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

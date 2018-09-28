@@ -9,17 +9,17 @@
     <link rel="stylesheet" type="text/css" href="../static/news/css/main.css">
     <script type="text/javascript" src="../static/news/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="../static/news/js/main.js"></script>
-   {% block jj %}
+    {% block jj %}
 
-   {% endblock %}
+    {% endblock %}
 </head>
 <body>
 <div class="header_con">
     <div class="header">
         <a href="/" class="logo fl"><img src="../static/news/images/logo.png" alt="logo"></a>
-       {% block cc %}
+        {% block cc %}
 
-       {% endblock %}
+        {% endblock %}
         {% if not user %}
             <div class="user_btns fr">
                 <a href="javascript:;" class="login_btn">登录</a> / <a href="javascript:;" class="register_btn">注册</a>
@@ -39,21 +39,21 @@
 </div>
 
 <div class="conter_con">
-   {% block pp %}
-
-   {% endblock %}
-    <div class="rank_con fr">
-
-    {% block gg %}
+    {% block pp %}
 
     {% endblock %}
+    <div class="rank_con fr">
+
+        {% block gg %}
+
+        {% endblock %}
         <div class="rank_title">
             <h3>点击排行</h3>
         </div>
         <ul class="rank_list">
             {% for news in news_list %}
-               <li><span class={{ loop.index | index_convert }}> {{ loop.index }}</span><a href="/news/1">{{ news.title
-                       }}</a></li>
+                <li><span class={{ loop.index | index_convert }}> {{ loop.index }}</span><a
+                        href="/news/{{ news.id }}">{{ news.title }}</a></li>
             {% endfor %}
 
         </ul>

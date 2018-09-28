@@ -5,12 +5,14 @@ from flask import request, abort, current_app, make_response, Response, jsonify,
 from info import sr, db
 from info.lib.yuntongxun.sms import CCP
 from info.models import User
+from info.modules.news import blu_news
 from info.modules.passport import blu_passport
 from info.utils.captcha.pic_captcha import captcha
 from info.utils.response_code import RET, error_map
 
 
 # 图片验证码
+@blu_news.route('/passport/get_img_code')
 @blu_passport.route('/get_img_code')
 def get_img_code():
     # 1获取数据

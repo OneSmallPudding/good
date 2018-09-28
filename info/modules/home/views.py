@@ -11,6 +11,7 @@ from info.utils.response_code import RET, error_map
 
 @blu_home.route('/')
 def index():
+    # 查询登陆的人
     user_id = session.get('user_id')
     user = None
     if user_id:
@@ -19,6 +20,7 @@ def index():
         except BaseException as e:
             current_app.logger.error(e)
     user = user.to_dict() if user else None
+
     # 查询前10的新闻
     news_list = []
     try:
@@ -26,8 +28,14 @@ def index():
     except BaseException as e:
         current_app.logger.error(e)
     news_list = [news.to_basic_dict() for news in news_list]
-    return render_template('index.html', user=user, news_list=news_list)
-    # return '1111'
+
+    # 获取分类列表
+    categories = []
+    try:
+        categories = Category.query.all()
+    except BaseException as e:
+        current_app.logger.error(e)
+    return render_template('index.html', user=user, news_list=news_list, categories=categories)
 
 
 # 设置图标

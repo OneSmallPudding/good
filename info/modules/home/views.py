@@ -1,8 +1,9 @@
-from flask import current_app, render_template, session, request, jsonify
+from flask import current_app, render_template, session, request, jsonify, g
 from info import sr
 import logging
 
 # 2蓝图注册路由
+from info.common import user_login_data
 from info.constants import CLICK_RANK_MAX_NEWS, HOME_PAGE_MAX_NEWS
 from info.models import User, Category, News
 from info.modules.home import blu_home
@@ -10,15 +11,9 @@ from info.utils.response_code import RET, error_map
 
 
 @blu_home.route('/')
+@user_login_data
 def index():
-    # 查询登陆的人
-    user_id = session.get('user_id')
-    user = None
-    if user_id:
-        try:
-            user = User.query.get(user_id)
-        except BaseException as e:
-            current_app.logger.error(e)
+    user = g.user
     user = user.to_dict() if user else None
 
     # 查询前10的新闻
@@ -35,6 +30,7 @@ def index():
         categories = Category.query.all()
     except BaseException as e:
         current_app.logger.error(e)
+
     return render_template('index.html', user=user, news_list=news_list, categories=categories)
 
 

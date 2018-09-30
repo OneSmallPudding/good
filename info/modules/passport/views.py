@@ -12,7 +12,6 @@ from info.utils.response_code import RET, error_map
 
 
 # 图片验证码
-@blu_news.route('/passport/get_img_code')
 @blu_passport.route('/get_img_code')
 def get_img_code():
     # 1获取数据

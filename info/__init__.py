@@ -6,7 +6,6 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from redis import StrictRedis
 from config import config_dict
-from info.common import func_index_convert
 
 db = None  # type:SQLAlchemy
 sr = None  # type:StrictRedis
@@ -28,14 +27,14 @@ def set_log(log_level):
 def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂模式
     '''创建ａｐｐ'''
     config_class = config_dict[config_type]
-    app = Flask(__name__,static_folder='static')
+    app = Flask(__name__, static_folder='static')
     # 用对象加载配置信息
     app.config.from_object(config_class)
     global db, sr
     # 创建数据库链接对象
     db = SQLAlchemy(app)
     # 创建ｒｅｄｉｓ数据撸链接对象
-    sr = StrictRedis(host=config_class.REDIS_HOST, port=config_class.REDIS_PORT,decode_responses=True)
+    sr = StrictRedis(host=config_class.REDIS_HOST, port=config_class.REDIS_PORT, decode_responses=True)
     # 创建ｓｅｓｓｉｏｎ数据链接对象　，ｓｅｓｓｉｏｎ对象会配置里面选择自动存储不用接收对象，进行手动操作
     Session(app)
     # 初始化迁移添加迁移命令
@@ -53,6 +52,7 @@ def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂
     # 关联模型
     # from info.models import *  #函数内部不能用ｆｒｏｍ　　ｉｍｐｏｒｔ　　*
     import info.models
-    #注册过滤器
-    app.add_template_filter(func_index_convert,'index_convert')
+    # 注册过滤器
+    from info.common import func_index_convert
+    app.add_template_filter(func_index_convert, 'index_convert')
     return app

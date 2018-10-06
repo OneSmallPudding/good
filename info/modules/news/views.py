@@ -43,11 +43,22 @@ def news_detail(news_id):
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
-    comments = [comment.to_dict() for comment in comments]
+    # comments = [comment.to_dict() for comment in comments]
+
+    # 显示点赞
+    comment_list = []
+    for comment in comments:
+        comment_dict = comment.to_dict()
+        is_like = False
+        if user:
+            if comment in user.like_comments:
+                is_like = True
+        comment_dict['is_like'] = is_like
+        comment_list.append(comment_dict)
 
     user = user.to_dict() if user else None
     return render_template('detail.html', news=news.to_dict(), user=user, news_list=news_list, is_collect=is_collect,
-                           comments=comments)
+                           comments=comment_list)
 
 
 # 收藏
@@ -104,7 +115,7 @@ def news_comment():
     try:
         news_id = int(news_id)
     except BaseException as e:
-        comment_content.app.logger.error(e)
+        current_app.logger.error(e)
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     try:
         news = News.query.get(news_id)
@@ -135,3 +146,38 @@ def news_comment():
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
     # 返回
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK], data=comment.to_dict())
+
+
+# 点赞
+@blu_news.route('/comment_like', methods=['POST'])
+@user_login_data
+def comment_like():
+    user = g.user
+    if not user:
+        return jsonify(errno=RET.SERVERERR, errmsg=error_map[RET.SESSIONERR])
+    # 获取参数
+    comment_id = request.json.get('comment_id')
+    action = request.json.get('action')
+    if not all([comment_id, action]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        comment_id = int(comment_id)
+    except BaseException as e:
+        current_app.app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        comment = Comment.query.get(comment_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if not comment:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if action not in ["add", "remove"]:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if action == "add":
+        user.like_comments.append(comment)
+        comment.like_count += 1
+    else:
+        user.like_comments.remove(comment)
+        comment.like_count -= 1
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

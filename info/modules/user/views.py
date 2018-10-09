@@ -1,6 +1,8 @@
 from info.common import user_login_data
+from info.constants import USER_COLLECTION_MAX_NEWS
+from info.models import tb_user_collection
 from info.modules.user import blu_user
-from flask import render_template, g, url_for, abort, request, jsonify
+from flask import render_template, g, url_for, abort, request, jsonify, current_app
 
 from info.utils.response_code import RET, error_map
 
@@ -55,3 +57,34 @@ def pass_info():
         return jsonify(errno=RET.PWDERR, errmsg=error_map[RET.PWDERR])
     user.password = new_password
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+# 收藏
+@blu_user.route('/collection')
+@user_login_data
+def collection():
+    user = g.user
+    if not user:
+        return abort(404)
+    page = request.args.get("p", 1)
+    try:
+        page = int(page)
+    except BaseException as e:
+        current_app.logger.error(e)
+        page = 1
+    news_list = []
+    total_page = 1
+    try:
+        pn = user.collection_news.order_by(tb_user_collection.c.create_time.desc()).paginate(page,USER_COLLECTION_MAX_NEWS)
+        news_list = pn.items
+        cur_page =page
+        total_page = pn.pages
+    except BaseException as e:
+        current_app.logger.error(e)
+    data = {
+        "news_list":[news.to_dict() for news in news_list],
+        "cur_page": cur_page,
+        "total_page": total_page
+    }
+
+    return render_template('user_collection.html',data = data )

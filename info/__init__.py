@@ -45,8 +45,12 @@ def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂
     # 3应用注册蓝图
     from info.modules.passport import blu_passport  # 如果内容只使用一次就在使用前导入
     app.register_blueprint(blu_passport)
+
     from info.modules.news import blu_news  # 如果内容只使用一次就在使用前导入
     app.register_blueprint(blu_news)
+
+    from info.modules.user import blu_user  # 如果内容只使用一次就在使用前导入
+    app.register_blueprint(blu_user)
     # 配置日志
     set_log(config_class.LOG_LEVEL)
     # 关联模型

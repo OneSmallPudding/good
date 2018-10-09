@@ -83,7 +83,7 @@ def collection():
         current_app.logger.error(e)
     data = {
         "news_list":[news.to_dict() for news in news_list],
-        "cur_page": cur_page,
+        "cur_page": page,
         "total_page": total_page
     }
 

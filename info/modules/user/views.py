@@ -22,7 +22,7 @@ def base_info():
     if not user:
         return render_template(abort(404))
     if request.method == 'GET':
-        return render_template('user_base_info.html')
+        return render_template('user_base_info.html', user=user)
     # 获取参数
     signature = request.json.get('signature')
     nick_name = request.json.get('nick_name')
@@ -35,3 +35,9 @@ def base_info():
     user.nick_name = nick_name
     user.gender = gender
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+@blu_user.route('/pass_info', methods=['GET', 'POST'])
+@user_login_data
+def pass_info():
+    return

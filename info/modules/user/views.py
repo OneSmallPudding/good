@@ -164,4 +164,36 @@ def pic_info():
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
-    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK],data = user.to_dict())
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK], data=user.to_dict())
+
+
+# 发布
+@blu_user.route('/news_list')
+@user_login_data
+def news_list():
+    user = g.user
+    if not user:
+        return abort(404)
+    page = request.args.get("p", 1)
+    try:
+        page = int(page)
+    except BaseException as e:
+        current_app.logger.error(e)
+        page = 1
+    news_list = []
+    cur_page = 1
+    total_pages = 1
+    try:
+        pn = user.news_list.order_by(News.create_time.desc()).paginate(page, USER_COLLECTION_MAX_NEWS)
+        news_list = pn.items
+        cur_page = pn.page
+        total_pages = pn.pages
+    except BaseException as e:
+        current_app.logger.error(e)
+    data = {
+        "news_list": [news.to_review_dict() for news in news_list],
+        "cur_page": cur_page,
+        "total_page": total_pages
+    }
+
+    return render_template('user_news_list.html', data=data)

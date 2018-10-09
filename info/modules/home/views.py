@@ -61,7 +61,7 @@ def get_news_list():
         current_app.logger.error(e)
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     # 根据请求参数查询数据
-    filter_list = []
+    filter_list = [News.status == 0]
     if cid != 1:
         filter_list.append(News.category_id == cid)
     try:

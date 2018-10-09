@@ -15,12 +15,13 @@ def user_info():
     return render_template('user.html', user=user)
 
 
+# 基本资料
 @blu_user.route('/base_info', methods=['GET', 'POST'])
 @user_login_data
 def base_info():
     user = g.user
     if not user:
-        return render_template(abort(404))
+        return abort(404)
     if request.method == 'GET':
         return render_template('user_base_info.html', user=user)
     # 获取参数
@@ -37,7 +38,20 @@ def base_info():
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
 
 
+# 密码修改
 @blu_user.route('/pass_info', methods=['GET', 'POST'])
 @user_login_data
 def pass_info():
-    return
+    user = g.user
+    if not user:
+        return abort(404)
+    if request.method == 'GET':
+        return render_template('user_pass_info.html')
+    old_password = request.json.get('old_password')
+    new_password = request.json.get('new_password')
+    if not all([old_password, new_password]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if not user.check_password(old_password):
+        return jsonify(errno=RET.PWDERR, errmsg=error_map[RET.PWDERR])
+    user.password = new_password
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

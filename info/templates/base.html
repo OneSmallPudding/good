@@ -32,7 +32,7 @@
                 {% else %}
                     src="../static/news/images/person01.png"
                 {% endif %}class="lgin_pic">
-                <a href="/user/user_info" id="nick_name">{{ user.nick_name }}</a>
+                <a href="{{ url_for('user_blu.user_info') }}" id="nick_name">{{ user.nick_name }}</a>
 
                 <a href="javascript:;" onclick="logout()">退出</a>
             </div>

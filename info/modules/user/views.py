@@ -141,3 +141,27 @@ def news_release():
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     db.session.add(news)
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+# 头像设置
+@blu_user.route('/pic_info', methods=['GET', 'POST'])
+@user_login_data
+def pic_info():
+    user = g.user
+    if not user:
+        return abort(404)
+    if request.method == 'GET':
+        user = user.to_dict() if user else None
+        return render_template('user_pic_info.html', user=user)
+    try:
+        img_bytes = request.files.get('avatar').read()
+        try:
+            file_name = img_upload(img_bytes)
+            user.avatar_url = file_name
+        except BaseException as e:
+            current_app.logger.error(e)
+            return jsonify(errno=RET.THIRDERR, errmsg=error_map[RET.THIRDERR])
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK],data = user.to_dict())

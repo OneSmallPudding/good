@@ -1,6 +1,7 @@
-from info.common import user_login_data
-from info.constants import USER_COLLECTION_MAX_NEWS
-from info.models import tb_user_collection
+from info import db
+from info.common import user_login_data, img_upload
+from info.constants import USER_COLLECTION_MAX_NEWS, QINIU_DOMIN_PREFIX
+from info.models import tb_user_collection, Category, News
 from info.modules.user import blu_user
 from flask import render_template, g, url_for, abort, request, jsonify, current_app
 
@@ -73,18 +74,70 @@ def collection():
         current_app.logger.error(e)
         page = 1
     news_list = []
+    cur_page = 1
     total_page = 1
     try:
-        pn = user.collection_news.order_by(tb_user_collection.c.create_time.desc()).paginate(page,USER_COLLECTION_MAX_NEWS)
+        pn = user.collection_news.order_by(tb_user_collection.c.create_time.desc()).paginate(page,
+                                                                                             USER_COLLECTION_MAX_NEWS)
         news_list = pn.items
-        cur_page =page
+        cur_page = pn.page
         total_page = pn.pages
     except BaseException as e:
         current_app.logger.error(e)
     data = {
-        "news_list":[news.to_dict() for news in news_list],
-        "cur_page": page,
+        "news_list": [news.to_dict() for news in news_list],
+        "cur_page": cur_page,
         "total_page": total_page
     }
 
-    return render_template('user_collection.html',data = data )
+    return render_template('user_collection.html', data=data)
+
+
+# 发布新闻
+@blu_user.route('/news_release', methods=['GET', 'POST'])
+@user_login_data
+def news_release():
+    user = g.user
+    if not user:
+        return abort(404)
+    if request.method == 'GET':
+        categories = []
+        try:
+            categories = Category.query.all()
+        except BaseException as e:
+            current_app.logger.error(e)
+        if len(categories):
+            categories.pop(0)
+        return render_template('user_news_release.html', categories=categories)
+    title = request.form.get("title")
+    category_id = request.form.get("category_id")
+    digest = request.form.get("digest")
+    index_image = request.files.get("index_image")
+    content = request.form.get("content")
+    if not all([title, category_id, digest, index_image, content]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        category_id = int(category_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+
+    # 创建新闻模型
+    news = News()
+    news.title = title
+    news.category_id = category_id
+    news.digest = digest
+    news.content = content
+    news.source = "个人发布"  # 新闻来源
+    news.user_id = user.id  # 新闻作者id
+    news.status = 1  # 新闻审核状态
+    try:
+        img_bytes = index_image.read()
+        file_name = img_upload(img_bytes)
+        news.index_image_url = QINIU_DOMIN_PREFIX + file_name
+        print(news.index_image_url)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    db.session.add(news)
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

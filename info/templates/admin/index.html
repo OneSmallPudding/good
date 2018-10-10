@@ -16,9 +16,9 @@
 
 <div class="side_bar">
     <div class="user_info">
-        <img {% if user.avatar_url  %}src="{{ user.avatar_url }}"{% else %}
-        src="../../static/admin/images/person.png"
-        {% endif %} alt="张大山">
+        <img {% if user.avatar_url %}src="{{ user.avatar_url }}"{% else %}
+             src="../../static/admin/images/person.png"
+             {% endif %} alt="张大山">
         <p>欢迎你 <em>{{ user.nick_name }}</em></p>
     </div>
 
@@ -34,7 +34,7 @@
         <ul class="sub_menu">
             <li><a href="{{ url_for('admin_blu.news_review') }}" class="icon031" target="main_frame">新闻审核</a></li>
             <li><a href="{{ url_for('admin_blu.news_edit') }}" class="icon032" target="main_frame">新闻版式编辑</a></li>
-            <li><a href="../../static/admin/html/news_type.html" class="icon034" target="main_frame">新闻分类管理</a></li>
+            <li><a href="{{ url_for('admin_blu.news_type') }}" class="icon034" target="main_frame">新闻分类管理</a></li>
         </ul>
     </div>
 </div>

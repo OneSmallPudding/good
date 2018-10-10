@@ -208,3 +208,35 @@ def news_review_action():
             return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
         news.reason = reason
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+# 新闻审核
+@blu_admin.route('/news_edit')
+def news_edit():
+    page = request.args.get("p", 1)
+    keyword = request.args.get("keyword")
+    try:
+        page = int(page)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(403)
+    news_list = []
+    cur_page = 1
+    total_page = 1
+    filter_list = []
+    if keyword:
+        filter_list.append(News.title.contains(keyword))
+    try:
+        pn = News.query.filter(*filter_list).paginate(page, ADMIN_USER_PAGE_MAX_COUNT)
+        news_list = [news.to_review_dict() for news in pn.items]
+        cur_page = pn.page
+        total_page = pn.pages
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(403)
+    data = {
+        'news_list': news_list,
+        'cur_page': cur_page,
+        'total_page': total_page
+    }
+    return render_template('admin/news_edit.html', data=data)

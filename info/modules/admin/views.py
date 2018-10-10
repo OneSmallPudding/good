@@ -5,7 +5,9 @@ from info.common import user_login_data
 from info.constants import ADMIN_USER_PAGE_MAX_COUNT
 from info.models import User, News
 from info.modules.admin import blu_admin
-from flask import render_template, request, current_app, session, redirect, url_for, g, abort
+from flask import render_template, request, current_app, session, redirect, url_for, g, abort, jsonify
+
+from info.utils.response_code import RET, error_map
 
 
 @blu_admin.route('/login', methods=['GET', 'POST'])
@@ -173,4 +175,36 @@ def news_review_detail(news_id):
         return abort(500)
     if not news:
         return abort(403)
-    return render_template('admin/news_review_detail.html',news=news.to_dict())
+    return render_template('admin/news_review_detail.html', news=news.to_dict())
+
+
+# 提交审核
+@blu_admin.route('/news_review_action', methods=['POST'])
+def news_review_action():
+    news_id = request.json.get('news_id')
+    action = request.json.get('action')
+    reason = request.json.get('reason')
+    if not all([news_id, action]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if action not in ["accept", "reject"]:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        news_id = int(news_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        news = News.query.get(news_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    if not news:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if action == "accept":
+        news.status = 0
+    else:
+        news.status = -1
+        if not reason:
+            return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+        news.reason = reason
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

@@ -2,9 +2,10 @@ import time
 from datetime import datetime, timedelta
 
 from info.common import user_login_data
+from info.constants import ADMIN_USER_PAGE_MAX_COUNT
 from info.models import User
 from info.modules.admin import blu_admin
-from flask import render_template, request, current_app, session, redirect, url_for, g
+from flask import render_template, request, current_app, session, redirect, url_for, g, abort
 
 
 @blu_admin.route('/login', methods=['GET', 'POST'])
@@ -99,3 +100,30 @@ def logout():
     session.pop('user_id', None)
     session.pop('is_admin', None)
     return redirect(url_for('home_blu.index'))
+
+
+@blu_admin.route('/user_list')
+def user_list():
+    page = request.args.get("p", 1)
+    try:
+        page = int(page)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(403)
+    user_list = []
+    cur_page = 1
+    total_page = 1
+    try:
+        pn = User.query.filter(User.is_admin == False).paginate(page, ADMIN_USER_PAGE_MAX_COUNT)
+        user_list = [user.to_admin_dict() for user in pn.items]
+        cur_page = pn.page
+        total_page = pn.pages
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(403)
+    data = {
+        'user_list': user_list,
+        'cur_page': cur_page,
+        'total_page': total_page
+    }
+    return render_template('admin/user_list.html', data=data)

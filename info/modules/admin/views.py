@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from info.common import user_login_data
 from info.constants import ADMIN_USER_PAGE_MAX_COUNT
-from info.models import User
+from info.models import User, News
 from info.modules.admin import blu_admin
 from flask import render_template, request, current_app, session, redirect, url_for, g, abort
 
@@ -95,6 +95,7 @@ def user_count():
     return render_template('admin/user_count.html', data=data)
 
 
+# 退出登陆
 @blu_admin.route('/logout')
 def logout():
     session.pop('user_id', None)
@@ -102,6 +103,7 @@ def logout():
     return redirect(url_for('home_blu.index'))
 
 
+# 用户列表
 @blu_admin.route('/user_list')
 def user_list():
     page = request.args.get("p", 1)
@@ -127,3 +129,35 @@ def user_list():
         'total_page': total_page
     }
     return render_template('admin/user_list.html', data=data)
+
+
+# 新闻审核
+@blu_admin.route('/news_review')
+def news_review():
+    page = request.args.get("p", 1)
+    keyword = request.args.get("keyword")
+    try:
+        page = int(page)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(403)
+    news_list = []
+    cur_page = 1
+    total_page = 1
+    filter_list = []
+    if keyword:
+        filter_list.append(News.title.contains(keyword))
+    try:
+        pn = News.query.filter(*filter_list).paginate(page, ADMIN_USER_PAGE_MAX_COUNT)
+        news_list = [news.to_review_dict() for news in pn.items]
+        cur_page = pn.page
+        total_page = pn.pages
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(403)
+    data = {
+        'news_list': news_list,
+        'cur_page': cur_page,
+        'total_page': total_page
+    }
+    return render_template('admin/news_review.html', data=data)

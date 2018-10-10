@@ -57,7 +57,7 @@ def news_detail(news_id):
         comment_list.append(comment_dict)
 
     user = user.to_dict() if user else None
-    return render_template('detail.html', news=news.to_dict(), user=user, news_list=news_list, is_collect=is_collect,
+    return render_template('news/detail.html', news=news.to_dict(), user=user, news_list=news_list, is_collect=is_collect,
                            comments=comment_list)
 
 

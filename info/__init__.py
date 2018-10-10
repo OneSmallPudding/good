@@ -51,6 +51,8 @@ def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂
 
     from info.modules.user import blu_user  # 如果内容只使用一次就在使用前导入
     app.register_blueprint(blu_user)
+    from info.modules.admin import blu_admin  # 如果内容只使用一次就在使用前导入
+    app.register_blueprint(blu_admin)
     # 配置日志
     set_log(config_class.LOG_LEVEL)
     # 关联模型
@@ -65,5 +67,5 @@ def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂
     def error_handler_404(error):
         user = g.user
         user = user.to_dict() if user else None
-        return render_template('404.html',user =user)
+        return render_template('news/404.html', user =user)
     return app

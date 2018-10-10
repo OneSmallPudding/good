@@ -15,7 +15,7 @@ def user_info():
     if not user:
         return render_template(url_for('/'))
     user = user.to_dict() if user else None
-    return render_template('user.html', user=user)
+    return render_template('news/user.html', user=user)
 
 
 # 基本资料
@@ -26,7 +26,7 @@ def base_info():
     if not user:
         return abort(404)
     if request.method == 'GET':
-        return render_template('user_base_info.html', user=user)
+        return render_template('news/user_base_info.html', user=user)
     # 获取参数
     signature = request.json.get('signature')
     nick_name = request.json.get('nick_name')
@@ -49,7 +49,7 @@ def pass_info():
     if not user:
         return abort(404)
     if request.method == 'GET':
-        return render_template('user_pass_info.html')
+        return render_template('news/user_pass_info.html')
     old_password = request.json.get('old_password')
     new_password = request.json.get('new_password')
     if not all([old_password, new_password]):
@@ -90,7 +90,7 @@ def collection():
         "total_page": total_page
     }
 
-    return render_template('user_collection.html', data=data)
+    return render_template('news/user_collection.html', data=data)
 
 
 # 发布新闻
@@ -108,7 +108,7 @@ def news_release():
             current_app.logger.error(e)
         if len(categories):
             categories.pop(0)
-        return render_template('user_news_release.html', categories=categories)
+        return render_template('news/user_news_release.html', categories=categories)
     title = request.form.get("title")
     category_id = request.form.get("category_id")
     digest = request.form.get("digest")
@@ -152,7 +152,7 @@ def pic_info():
         return abort(404)
     if request.method == 'GET':
         user = user.to_dict() if user else None
-        return render_template('user_pic_info.html', user=user)
+        return render_template('news/user_pic_info.html', user=user)
     try:
         img_bytes = request.files.get('avatar').read()
         try:
@@ -196,4 +196,4 @@ def news_list():
         "total_page": total_pages
     }
 
-    return render_template('user_news_list.html', data=data)
+    return render_template('news/user_news_list.html', data=data)

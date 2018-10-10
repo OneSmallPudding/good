@@ -161,3 +161,16 @@ def news_review():
         'total_page': total_page
     }
     return render_template('admin/news_review.html', data=data)
+
+
+# 新闻审核详情页
+@blu_admin.route('/news_review_detail/<int:news_id>')
+def news_review_detail(news_id):
+    try:
+        news = News.query.get(news_id)
+    except BaseException as     e:
+        current_app.logger.error(e)
+        return abort(500)
+    if not news:
+        return abort(403)
+    return render_template('admin/news_review_detail.html',news=news.to_dict())

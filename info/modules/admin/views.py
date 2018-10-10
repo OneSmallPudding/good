@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from info.common import user_login_data
 from info.constants import ADMIN_USER_PAGE_MAX_COUNT
-from info.models import User, News
+from info.models import User, News, Category
 from info.modules.admin import blu_admin
 from flask import render_template, request, current_app, session, redirect, url_for, g, abort, jsonify
 
@@ -210,7 +210,7 @@ def news_review_action():
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
 
 
-# 新闻审核
+# 新闻版式编辑
 @blu_admin.route('/news_edit')
 def news_edit():
     page = request.args.get("p", 1)
@@ -240,3 +240,31 @@ def news_edit():
         'total_page': total_page
     }
     return render_template('admin/news_edit.html', data=data)
+
+
+# 新闻版式详情页
+@blu_admin.route('/news_edit_detail/<int:news_id>')
+def news_edit_detail(news_id):
+    try:
+        news = News.query.get(news_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return abort(500)
+    if not news:
+        return abort(403)
+    categories = []
+    try:
+        categories = Category.query.all()
+    except BaseException as e:
+        current_app.logger.error(e)
+    if len(categories):
+        categories.pop(0)
+    category_list = []
+    for category in categories:
+        category_dict = category.to_dict()
+        is_selected = False
+        if category.id == news.category_id:
+            is_selected = True
+        category_dict['is_selected'] = is_selected
+        category_list.append(category_dict)
+    return render_template('admin/news_edit_detail.html', news=news.to_dict(),category_list =category_list)

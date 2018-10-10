@@ -1,8 +1,8 @@
 import time
 from datetime import datetime, timedelta
 
-from info.common import user_login_data
-from info.constants import ADMIN_USER_PAGE_MAX_COUNT
+from info.common import user_login_data, img_upload
+from info.constants import ADMIN_USER_PAGE_MAX_COUNT, QINIU_DOMIN_PREFIX
 from info.models import User, News, Category
 from info.modules.admin import blu_admin
 from flask import render_template, request, current_app, session, redirect, url_for, g, abort, jsonify
@@ -267,4 +267,46 @@ def news_edit_detail(news_id):
             is_selected = True
         category_dict['is_selected'] = is_selected
         category_list.append(category_dict)
-    return render_template('admin/news_edit_detail.html', news=news.to_dict(),category_list =category_list)
+    return render_template('admin/news_edit_detail.html', news=news.to_dict(), category_list=category_list)
+
+
+# 提交新闻版式编辑
+@blu_admin.route('/news_edit_action', methods=['POST'])
+def news_edit_action():
+    news_id = request.form.get("news_id")
+    category_id = request.form.get("category_id")
+    title = request.form.get("title")
+    digest = request.form.get("digest")
+    content = request.form.get("content")
+    index_image = request.files.get("index_image")
+    # 校验参数
+    if not all([news_id, category_id, title, digest, content]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+
+    try:
+        news_id = int(news_id)
+        category_id = int(category_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        news = News.query.get(news_id)
+        category = Category.query.get(category_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    if not news or not category:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    news.title = title
+    news.digest = digest
+    news.category_id = category_id
+    news.content = content
+    if index_image:
+        try:
+            img_bytes = index_image.read()
+            file_name = img_upload(img_bytes)
+            news.index_image_url = QINIU_DOMIN_PREFIX + file_name
+        except BaseException as e:
+            current_app.logger.error(e)
+            return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

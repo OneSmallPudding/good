@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from info.common import user_login_data
 from info.models import User
@@ -60,17 +60,36 @@ def user_count():
         current_app.logger.error(e)
     # 日增人数
     day_count = 0
-    t = time.localtime()
+
     data_mon_str = '%d-%02d-%02d' % (t.tm_year, t.tm_mon, t.tm_mday)
-    data_mon = datetime.strptime(data_mon_str, "%Y-%m-%d")
+    date_day = datetime.strptime(data_mon_str, "%Y-%m-%d")
     try:
-        day_count = User.query.filter(User.is_admin == False, User.create_time >= data_mon).count()
+        day_count = User.query.filter(User.is_admin == False, User.create_time >= date_day).count()
     except BaseException as e:
         current_app.logger.error(e)
+    # 获取30天的注册人数 情况
+    active_count = []
+    active_time = []
+    for i in range(0, 30):
+        begin_date = date_day - timedelta(days=i)
+        end_date = date_day + timedelta(days=1) - timedelta(days=i)
+        try:
+            one_day_count = User.query.filter(User.is_admin == False, User.create_time >= begin_date,
+                                              User.create_time <=
+                                              end_date).count()
+            active_count.append(one_day_count)
+            one_day_str = begin_date.strftime("%Y-%m-%d")
+            active_time.append(one_day_str)
+        except BaseException as e:
+            current_app.logger.error(e)
+    active_time.reverse()
+    active_count.reverse()
     data = {
         'total_count': total_count,
         "mon_count": mon_count,
-        "day_count": day_count
+        "day_count": day_count,
+        'active_count': active_count,
+        'active_time': active_time
     }
     return render_template('admin/user_count.html', data=data)
 

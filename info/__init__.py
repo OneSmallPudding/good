@@ -68,4 +68,6 @@ def create_app(config_type):  # 工厂函数，提供物料创建应用，工厂
         user = g.user
         user = user.to_dict() if user else None
         return render_template('news/404.html', user =user)
+    from  flask_wtf import CSRFProtect
+    CSRFProtect(app)
     return app

@@ -55,10 +55,14 @@ def news_detail(news_id):
                 is_like = True
         comment_dict['is_like'] = is_like
         comment_list.append(comment_dict)
-
+    is_follow = False
+    if news.user and user:
+        if news.user in user.followed:
+            is_follow = True
     user = user.to_dict() if user else None
-    return render_template('news/detail.html', news=news.to_dict(), user=user, news_list=news_list, is_collect=is_collect,
-                           comments=comment_list)
+    return render_template('news/detail.html', news=news.to_dict(), user=user, news_list=news_list,
+                           is_collect=is_collect,
+                           comments=comment_list, is_follow=is_follow)
 
 
 # 收藏
@@ -180,4 +184,40 @@ def comment_like():
     else:
         user.like_comments.remove(comment)
         comment.like_count -= 1
+    return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])
+
+
+# 收藏
+@blu_news.route('/followed_user', methods=['POST'])
+@user_login_data
+def followed_user():
+    user = g.user
+    if not user:
+        return jsonify(errno=RET.SERVERERR, errmsg=error_map[RET.SESSIONERR])
+    # 获取参数
+    user_id = request.json.get('user_id')
+    action = request.json.get('action')
+    # 验证参数
+    if not all([user_id, action]):
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        user_id = int(user_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    try:
+        author = User.query.get(user_id)
+    except BaseException as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
+    if not author:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    if action not in ['follow', 'unfollow']:
+        return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
+    # 经行操作
+    if action == 'follow':
+        user.followed.append(author)
+    else:
+        user.followed.remove(author)
+    # 返回
     return jsonify(errno=RET.OK, errmsg=error_map[RET.OK])

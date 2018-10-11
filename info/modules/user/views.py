@@ -93,6 +93,38 @@ def collection():
     return render_template('news/user_collection.html', data=data)
 
 
+# 我的关注
+@blu_user.route('/user_follow')
+@user_login_data
+def user_follow():
+    user = g.user
+    if not user:
+        return abort(404)
+    page = request.args.get("p", 1)
+    try:
+        page = int(page)
+    except BaseException as e:
+        current_app.logger.error(e)
+        page = 1
+    author_list = []
+    cur_page = 1
+    total_page = 1
+    try:
+        pn = user.followed.paginate(page,USER_COLLECTION_MAX_NEWS)
+        author_list = pn.items
+        cur_page = pn.page
+        total_page = pn.pages
+    except BaseException as e:
+        current_app.logger.error(e)
+    data = {
+        "author_list": [author.to_dict() for author in author_list],
+        "cur_page": cur_page,
+        "total_page": total_page
+    }
+
+    return render_template('news/user_follow.html', data=data)
+
+
 # 发布新闻
 @blu_user.route('/news_release', methods=['GET', 'POST'])
 @user_login_data

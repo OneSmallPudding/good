@@ -13,7 +13,7 @@ from info.utils.response_code import RET, error_map
 def user_info():
     user = g.user
     if not user:
-        return render_template(url_for('/'))
+        return render_template(url_for('home_blu.index'))
     user = user.to_dict() if user else None
     return render_template('news/user.html', user=user)
 

@@ -18,7 +18,7 @@
     <div class="user_info">
         <img {% if user.avatar_url %}src="{{ user.avatar_url }}"{% else %}
              src="../../static/admin/images/person.png"
-             {% endif %} alt="张大山">
+             {% endif %} alt="{{ user.name }}">
         <p>欢迎你 <em>{{ user.nick_name }}</em></p>
     </div>
 

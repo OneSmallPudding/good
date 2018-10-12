@@ -14,9 +14,11 @@ from info.utils.response_code import RET, error_map
 @user_login_data
 def news_detail(news_id):
     try:
-        news = News.query.get(news_id)
+        news = News.query.filter(News.status == 0, News.id == news_id).first()
     except BaseException as e:
         current_app.logger.error(e)
+        return abort(404)
+    if not news:
         return abort(404)
     news.clicks += 1
 
@@ -84,7 +86,7 @@ def news_collect():
         current_app.logger.error(e)
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     try:
-        news = News.query.get(news_id)
+        news = News.query.filter(News.status == 0, News.id == news_id).first()
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg=error_map[RET.DBERR])
@@ -122,12 +124,11 @@ def news_comment():
         current_app.logger.error(e)
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     try:
-        news = News.query.get(news_id)
+        news = News.query.filter(News.status == 0, News.id == news_id).first()
     except BaseException as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     if not news:
-        print('2')
         return jsonify(errno=RET.PARAMERR, errmsg=error_map[RET.PARAMERR])
     # 操作
     comment = Comment()

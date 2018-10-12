@@ -22,7 +22,7 @@
         <li class="author_card card_list">
             <a href="/user/other?user_id=1" target="_blank" class="author_pic"><img
                     {% if author.avatar_url %}src="{{ author.avatar_url }}" {% else %}
-                    src="../../static/news/images/cat.jpg" {% endif %} alt="author_pic"></a>
+                    src="../../static/news/images/person01.png" {% endif %} alt="author_pic"></a>
             <a href="/user/other?user_id=1" target="_blank" class="author_name">{{ author.nick_name }}</a>
             <div class="author_resume">{{ author.signature }}</div>
             <div class="writings"><span>总篇数</span><b>{{ author.news_count }}</b></div>

@@ -19,7 +19,7 @@ def index():
     # 查询前10的新闻
     news_list = []
     try:
-        news_list = News.query.order_by(News.clicks.desc()).limit(CLICK_RANK_MAX_NEWS).all()
+        news_list = News.query.order_by(News.clicks.desc(),News.status == 0).limit(CLICK_RANK_MAX_NEWS).all()
     except BaseException as e:
         current_app.logger.error(e)
     news_list = [news.to_basic_dict() for news in news_list]

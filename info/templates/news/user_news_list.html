@@ -21,7 +21,7 @@
                     {% else %}<em class="nopass">未通过</em>
                 {% endif %}<span>{{ news.create_time }}</span>
                 {% if news.status == -1 %}
-                <b>未通过原因：因为写的太boring,因为写的太boring,因为写的太boring,因为写的太boring,</b>
+                <b>{{ news.reason }}</b>
             {% endif %}</li>
         {% endfor %}
 

@@ -272,7 +272,7 @@ def news_edit_detail(news_id):
 
 
 # 提交新闻版式编辑
-@blu_admin.route('/news_edit_action', methods=['POST'])
+@blu_admin.route('/news_edit_detail', methods=['POST'])
 def news_edit_action():
     news_id = request.form.get("news_id")
     category_id = request.form.get("category_id")

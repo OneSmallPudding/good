@@ -3,7 +3,7 @@ from info.common import user_login_data, img_upload
 from info.constants import USER_COLLECTION_MAX_NEWS, QINIU_DOMIN_PREFIX
 from info.models import tb_user_collection, Category, News
 from info.modules.user import blu_user
-from flask import render_template, g, url_for, abort, request, jsonify, current_app
+from flask import render_template, g, url_for, abort, request, jsonify, current_app,redirect
 
 from info.utils.response_code import RET, error_map
 
@@ -13,7 +13,7 @@ from info.utils.response_code import RET, error_map
 def user_info():
     user = g.user
     if not user:
-        return render_template(url_for('home_blu.index'))
+        return redirect(url_for('home_blu.index'))
     user = user.to_dict() if user else None
     return render_template('news/user.html', user=user)
 

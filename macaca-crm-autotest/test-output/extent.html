@@ -1,0 +1,1434 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+	<meta charset='utf-8' /> 
+	<meta name='description' content='' />
+	<meta name='robots' content='noodp, noydir' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+	<meta id="timeStampFormat" name="timeStampFormat" content='MMM d, yyyy hh:mm:ss a'/>
+	
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+		<link href='https://cdn.rawgit.com/anshooarora/extentreports-java/b4a58fcfd1e137bd9287244035a7c80d3d73b3af/dist/css/extent.css' type='text/css' rel='stylesheet' />
+	
+	<title>test-output/extent.html</title>
+
+	<style type='text/css'>
+	</style>
+</head>
+
+	<body class='extent standard default hide-overflow '>
+		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
+			<span><i class='material-icons'>desktop_windows</i></span>
+		</div>
+
+<nav>
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo blue darken-3">Extent</a>
+
+		<!-- slideout menu -->
+		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
+						<li class='waves-effect'><a href='#!' view='exception-view' onclick="configureView(2)"><i class='material-icons'>bug_report</i></a></li>
+			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
+		</ul>
+
+		<!-- report name -->
+		<span class='report-name'>高顿app项目测试报告</span>
+		
+		<!-- report headline -->
+		<span class='report-headline'></span>
+
+		<!-- nav-right -->
+		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+			<li>
+                <a href='#!'>
+                    <span class='label suite-start-time blue darken-3'>Nov 13, 2018 06:51:25 PM</span>
+				</a>
+			</li>
+			<li>
+                <a href='#!'>
+                    <span class='label blue darken-3'>3.1.2</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+		<!-- container -->
+		<div class='container'>
+
+<div id='test-view' class='view'>
+				
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- test toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true' data-beloworigin='true' data-hover='true' href='#'>
+					<i class='material-icons'>warning</i> Status
+				</a>
+				<ul id='tests-toggle' class='dropdown-content'>
+											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+						<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+					<li class='divider'></li>
+					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
+				</ul>
+			</div>
+			<!-- test toggle -->
+
+			<!-- category toggle -->
+			<!-- category toggle -->
+
+			<!-- clear filters -->
+			<div class='chip transparent hide'>
+				<a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+					<i class='material-icons'>close</i> Clear
+				</a>
+			</div>
+			<!-- clear filters -->
+
+			<!-- enable dashboard -->
+			<div id='toggle-test-view-charts' class='chip transparent'>
+				<a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+					<i class='material-icons'>track_changes</i> Dashboard
+				</a>
+			</div>
+			<!-- enable dashboard -->
+
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+					<i class='material-icons'>search</i> Search
+				</a>
+
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+				
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+
+
+<div id='test-view-charts' class='subview-full'>
+	<div id='charts-row' class='row nm-v nm-h'>
+		<div class='col s12 m6 l6 np-h'>
+			<div class='card-panel nm-v'>
+				<div class='left panel-name'>Tests</div>
+				<div class='chart-box'>
+					<canvas id='parent-analysis' width='100' height='80'></canvas>
+				</div>
+				<div class='block text-small'>
+					<span class='tooltipped' data-position='top' data-tooltip='76.19%'><span class='strong'>16</span> test(s) passed</span>
+				</div>
+				<div class='block text-small'>
+					<span class='strong tooltipped' data-position='top' data-tooltip='23.81%'>5</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+				</div>
+			</div>
+		</div>
+		
+		<div class='col s12 m6 l6 np-h'>
+			<div class='card-panel nm-v'>
+				<div class='left panel-name'>Steps</div>
+				<div class='chart-box'>
+					<canvas id='child-analysis' width='100' height='80'></canvas>
+				</div>
+				<div class='block text-small'>
+					<span class='tooltipped' data-position='top' data-tooltip='76.19%'><span class='strong'>16</span> step(s) passed</span>
+				</div>
+				<div class='block text-small'>
+					<span class='strong tooltipped' data-position='top' data-tooltip='23.81%'>5</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+	<div class='subview-left left'>
+		
+		<div class='view-summary'>
+			<h5>Tests</h5>
+			<ul id='test-collection' class='test-collection'>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>testPortalGroup</span>
+						<span class='test-time'>Nov 13, 2018 06:51:46 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:51:46 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:51:48 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 1s+316ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:51:48 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='2'>
+					<div class='test-heading'>
+						<span class='test-name'>testHomeFresh</span>
+						<span class='test-time'>Nov 13, 2018 06:51:48 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:51:48 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:52:00 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 12s+568ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:52:00 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='3'>
+					<div class='test-heading'>
+						<span class='test-name'>testArticleRead</span>
+						<span class='test-time'>Nov 13, 2018 06:52:00 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:52:00 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:52:05 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 4s+846ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:52:05 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='4'>
+					<div class='test-heading'>
+						<span class='test-name'>testArticlePraise</span>
+						<span class='test-time'>Nov 13, 2018 06:52:05 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:52:05 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:52:31 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 26s+160ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='fail'>
+					<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+					<td class='timestamp'>6:52:31 PM</td>
+					<td class='step-details'><pre>java.lang.AssertionError: did not expect to find [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.failNotEquals(Assert.java:969)
+	at org.testng.Assert.assertTrue(Assert.java:43)
+	at org.testng.Assert.assertTrue(Assert.java:53)
+	at com.javademo.cases.testClue.testArticlePraise(testHome.java:144)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='5'>
+					<div class='test-heading'>
+						<span class='test-name'>testArticleComment</span>
+						<span class='test-time'>Nov 13, 2018 06:52:31 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:52:31 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:52:40 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 9s+179ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:52:40 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='6'>
+					<div class='test-heading'>
+						<span class='test-name'>testClickBanner</span>
+						<span class='test-time'>Nov 13, 2018 06:52:40 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:52:40 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:53:40 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 1m 0s+39ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:53:40 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='7'>
+					<div class='test-heading'>
+						<span class='test-name'>testPortalGroupClick</span>
+						<span class='test-time'>Nov 13, 2018 06:53:40 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:53:40 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:55:31 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 1m 50s+599ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:55:31 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='8'>
+					<div class='test-heading'>
+						<span class='test-name'>testDiscoverSowingMap</span>
+						<span class='test-time'>Nov 13, 2018 06:55:49 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:55:49 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:55:57 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 8s+79ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:55:57 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='9'>
+					<div class='test-heading'>
+						<span class='test-name'>testAccaPortalGroup</span>
+						<span class='test-time'>Nov 13, 2018 06:55:57 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:55:57 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:55:59 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 1s+877ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:55:59 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='10'>
+					<div class='test-heading'>
+						<span class='test-name'>testAccaTestTime</span>
+						<span class='test-time'>Nov 13, 2018 06:55:59 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:55:59 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:56:04 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 5s+109ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:56:04 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='11'>
+					<div class='test-heading'>
+						<span class='test-name'>testChooseInterestTag</span>
+						<span class='test-time'>Nov 13, 2018 06:56:04 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:56:04 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:58:32 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 2m 27s+956ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>6:58:32 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='12'>
+					<div class='test-heading'>
+						<span class='test-name'>testAccaLive</span>
+						<span class='test-time'>Nov 13, 2018 06:58:32 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:58:32 PM</span>
+	<span class='label end-time'>Nov 13, 2018 06:58:53 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 20s+539ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='fail'>
+					<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+					<td class='timestamp'>6:58:53 PM</td>
+					<td class='step-details'><pre>java.lang.Exception: An unknown server-side error occurred while processing the command.
+	at macaca.client.common.Utils.handleStatus(Utils.java:162)
+	at macaca.client.common.Utils.executeRequest(Utils.java:71)
+	at macaca.client.common.Utils.postRequest(Utils.java:119)
+	at macaca.client.common.Utils.request(Utils.java:140)
+	at macaca.client.MacacaClient.touch(MacacaClient.java:1411)
+	at macaca.client.MacacaClient.tap(MacacaClient.java:1427)
+	at com.javademo.utils.CommonUtil.clickPageBottom(CommonUtil.java:106)
+	at com.javademo.pages.GaodunDiscoverPage.clickLive(GaodunDiscoverPage.java:103)
+	at com.javademo.cases.testDiscover.testAccaLive(testDiscover.java:88)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='13'>
+					<div class='test-heading'>
+						<span class='test-name'>testAccaAllLive</span>
+						<span class='test-time'>Nov 13, 2018 06:58:53 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 06:58:53 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:00:18 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 1m 25s+611ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='fail'>
+					<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+					<td class='timestamp'>7:00:18 PM</td>
+					<td class='step-details'><pre>java.lang.Exception: An unknown server-side error occurred while processing the command.
+	at macaca.client.common.Utils.handleStatus(Utils.java:162)
+	at macaca.client.common.Utils.executeRequest(Utils.java:71)
+	at macaca.client.common.Utils.postRequest(Utils.java:119)
+	at macaca.client.common.Utils.request(Utils.java:140)
+	at macaca.client.MacacaClient.touch(MacacaClient.java:1411)
+	at macaca.client.MacacaClient.tap(MacacaClient.java:1427)
+	at com.javademo.utils.CommonUtil.clickPageBottom(CommonUtil.java:106)
+	at com.javademo.pages.GaodunDiscoverPage.clickLive(GaodunDiscoverPage.java:103)
+	at com.javademo.cases.testDiscover.testAccaAllLive(testDiscover.java:100)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='14'>
+					<div class='test-heading'>
+						<span class='test-name'>testAccaTeacher</span>
+						<span class='test-time'>Nov 13, 2018 07:00:18 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:00:18 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:00:21 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 2s+685ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='fail'>
+					<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+					<td class='timestamp'>7:00:21 PM</td>
+					<td class='step-details'><pre>java.lang.Exception: An unknown server-side error occurred while processing the command.
+	at macaca.client.common.Utils.handleStatus(Utils.java:162)
+	at macaca.client.common.Utils.executeRequest(Utils.java:71)
+	at macaca.client.common.Utils.postRequest(Utils.java:119)
+	at macaca.client.common.Utils.request(Utils.java:140)
+	at macaca.client.MacacaClient.touch(MacacaClient.java:1411)
+	at macaca.client.MacacaClient.drag(MacacaClient.java:1526)
+	at com.javademo.utils.CommonUtil.verticalScroll(CommonUtil.java:69)
+	at com.javademo.cases.testDiscover.testAccaTeacher(testDiscover.java:115)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='15'>
+					<div class='test-heading'>
+						<span class='test-name'>testCmaSowingMap</span>
+						<span class='test-time'>Nov 13, 2018 07:00:21 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:00:21 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:00:27 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 6s+75ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='fail'>
+					<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+					<td class='timestamp'>7:00:27 PM</td>
+					<td class='step-details'><pre>java.lang.NullPointerException
+	at com.javademo.pages.GaodunDiscoverPage.clickCma(GaodunDiscoverPage.java:43)
+	at com.javademo.cases.testDiscover.testCmaSowingMap(testDiscover.java:127)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='16'>
+					<div class='test-heading'>
+						<span class='test-name'>testCmaPortalGroup</span>
+						<span class='test-time'>Nov 13, 2018 07:00:27 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:00:27 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:00:42 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 15s+166ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>7:00:42 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='17'>
+					<div class='test-heading'>
+						<span class='test-name'>testCmaTestTime</span>
+						<span class='test-time'>Nov 13, 2018 07:00:42 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:00:42 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:00:48 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 5s+168ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>7:00:48 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='18'>
+					<div class='test-heading'>
+						<span class='test-name'>testAnsweringQuestion</span>
+						<span class='test-time'>Nov 13, 2018 07:01:10 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:01:10 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:01:19 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 8s+274ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>7:01:19 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='19'>
+					<div class='test-heading'>
+						<span class='test-name'>testDownload</span>
+						<span class='test-time'>Nov 13, 2018 07:01:19 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:01:19 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:01:25 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 6s+532ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>7:01:25 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='20'>
+					<div class='test-heading'>
+						<span class='test-name'>testQuestion</span>
+						<span class='test-time'>Nov 13, 2018 07:01:25 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:01:25 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:01:29 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 3s+477ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>7:01:29 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='21'>
+					<div class='test-heading'>
+						<span class='test-name'>testMyCourse</span>
+						<span class='test-time'>Nov 13, 2018 07:01:29 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Nov 13, 2018 07:01:29 PM</span>
+	<span class='label end-time'>Nov 13, 2018 07:01:31 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 1s+979ms</span>
+</div>
+	<div class='test-steps'>
+		<table class='bordered table-results'>
+			<thead>
+				<tr>
+					<th>Status</th>
+					<th>Timestamp</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>7:01:31 PM</td>
+					<td class='step-details'>Test passed</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- subview left -->
+
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<h5 class='test-name'></h5>
+
+			<div id='step-filters' class="right">
+				<span class="blue-text" status="info" alt="info" title="info"><i class="material-icons">info_outline</i></span>
+				<span class="green-text" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></span>
+				<span class="red-text" status="fail" alt="fail" title="fail"><i class="material-icons">cancel</i></span>
+				<span class="red-text text-darken-4" status="fatal" alt="fatal" title="fatal"><i class="material-icons">cancel</i></span>
+				<span class="pink-text text-lighten-1" status="error" alt="error" title="error"><i class="material-icons">error</i></span>
+				<span class="orange-text" alt="warning" status="warning" title="warning"><i class="material-icons">warning</i></span>
+				<span class="teal-text" status="skip" alt="skip" title="skip"><i class="material-icons">redo</i></span>
+				<span status="clear" alt="Clear filters" title="Clear filters"><i class="material-icons">clear</i></span>
+			</div>
+		</div>
+	</div>
+	<!-- subview right -->
+
+</div>
+<!-- test view -->
+<!-- category view -->
+<div id='exception-view' class='view hide'>
+
+    <section id='controls'>
+        <div class='controls grey lighten-4'>
+            <!-- search -->
+            <div class='chip transparent' alt='Search Tests' title='Search Tests'>
+                <a href="#" class='search-div'>
+                    <i class='material-icons'>search</i> Search
+                </a>
+
+                <div class='input-field left hide'>
+                    <input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+                </div>
+
+            </div>
+            <!-- search -->
+        </div>
+    </section>
+
+    <div class='subview-left left'>
+
+        <div class='view-summary'>
+            <h5>Exceptions</h3>
+                <ul id='exception-collection' class='exception-collection'>
+
+                        <li class='exception displayed active'>
+                            <div class='exception-heading'>
+                                <span class='exception-name'>java.lang.AssertionError</span>
+                                <span class='exception-count right'><span class='label red lighten-1 white-text'>1</span></span>
+                            </div>
+                            <div class='exception-content hide'>
+                                <div class='exception-tests'>
+                                    <table class='bordered table-results'>
+                                        <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>TestName</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                    <tr>
+                                                        <td>Nov 13, 2018 06:52:05 PM</td>
+                                                        <td class='linked' test-id='4'>testArticlePraise</td>
+                                                        <td><pre><pre>java.lang.AssertionError: did not expect to find [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.failNotEquals(Assert.java:969)
+	at org.testng.Assert.assertTrue(Assert.java:43)
+	at org.testng.Assert.assertTrue(Assert.java:53)
+	at com.javademo.cases.testClue.testArticlePraise(testHome.java:144)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></pre></td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <li class='exception displayed active'>
+                            <div class='exception-heading'>
+                                <span class='exception-name'>java.lang.Exception</span>
+                                <span class='exception-count right'><span class='label red lighten-1 white-text'>3</span></span>
+                            </div>
+                            <div class='exception-content hide'>
+                                <div class='exception-tests'>
+                                    <table class='bordered table-results'>
+                                        <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>TestName</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                    <tr>
+                                                        <td>Nov 13, 2018 06:58:32 PM</td>
+                                                        <td class='linked' test-id='12'>testAccaLive</td>
+                                                        <td><pre><pre>java.lang.Exception: An unknown server-side error occurred while processing the command.
+	at macaca.client.common.Utils.handleStatus(Utils.java:162)
+	at macaca.client.common.Utils.executeRequest(Utils.java:71)
+	at macaca.client.common.Utils.postRequest(Utils.java:119)
+	at macaca.client.common.Utils.request(Utils.java:140)
+	at macaca.client.MacacaClient.touch(MacacaClient.java:1411)
+	at macaca.client.MacacaClient.tap(MacacaClient.java:1427)
+	at com.javademo.utils.CommonUtil.clickPageBottom(CommonUtil.java:106)
+	at com.javademo.pages.GaodunDiscoverPage.clickLive(GaodunDiscoverPage.java:103)
+	at com.javademo.cases.testDiscover.testAccaLive(testDiscover.java:88)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nov 13, 2018 06:58:53 PM</td>
+                                                        <td class='linked' test-id='13'>testAccaAllLive</td>
+                                                        <td><pre><pre>java.lang.Exception: An unknown server-side error occurred while processing the command.
+	at macaca.client.common.Utils.handleStatus(Utils.java:162)
+	at macaca.client.common.Utils.executeRequest(Utils.java:71)
+	at macaca.client.common.Utils.postRequest(Utils.java:119)
+	at macaca.client.common.Utils.request(Utils.java:140)
+	at macaca.client.MacacaClient.touch(MacacaClient.java:1411)
+	at macaca.client.MacacaClient.tap(MacacaClient.java:1427)
+	at com.javademo.utils.CommonUtil.clickPageBottom(CommonUtil.java:106)
+	at com.javademo.pages.GaodunDiscoverPage.clickLive(GaodunDiscoverPage.java:103)
+	at com.javademo.cases.testDiscover.testAccaAllLive(testDiscover.java:100)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nov 13, 2018 07:00:18 PM</td>
+                                                        <td class='linked' test-id='14'>testAccaTeacher</td>
+                                                        <td><pre><pre>java.lang.Exception: An unknown server-side error occurred while processing the command.
+	at macaca.client.common.Utils.handleStatus(Utils.java:162)
+	at macaca.client.common.Utils.executeRequest(Utils.java:71)
+	at macaca.client.common.Utils.postRequest(Utils.java:119)
+	at macaca.client.common.Utils.request(Utils.java:140)
+	at macaca.client.MacacaClient.touch(MacacaClient.java:1411)
+	at macaca.client.MacacaClient.drag(MacacaClient.java:1526)
+	at com.javademo.utils.CommonUtil.verticalScroll(CommonUtil.java:69)
+	at com.javademo.cases.testDiscover.testAccaTeacher(testDiscover.java:115)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></pre></td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <li class='exception displayed active'>
+                            <div class='exception-heading'>
+                                <span class='exception-name'>java.lang.NullPointerException</span>
+                                <span class='exception-count right'><span class='label red lighten-1 white-text'>1</span></span>
+                            </div>
+                            <div class='exception-content hide'>
+                                <div class='exception-tests'>
+                                    <table class='bordered table-results'>
+                                        <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>TestName</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                    <tr>
+                                                        <td>Nov 13, 2018 07:00:21 PM</td>
+                                                        <td class='linked' test-id='15'>testCmaSowingMap</td>
+                                                        <td><pre><pre>java.lang.NullPointerException
+	at com.javademo.pages.GaodunDiscoverPage.clickCma(GaodunDiscoverPage.java:43)
+	at com.javademo.cases.testDiscover.testCmaSowingMap(testDiscover.java:127)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:131)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:658)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:792)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:140)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:122)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:589)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:398)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:392)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:302)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1145)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1067)
+	at org.testng.TestNG.runSuites(TestNG.java:997)
+	at org.testng.TestNG.run(TestNG.java:965)
+	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)
+	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123)
+</pre></pre></td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                </ul>
+        </div>
+    </div>
+
+    <div class='subview-right left'>
+        <div class='view-summary'>
+            <h5 class='exception-name'></h5>
+        </div>
+    </div>
+</div>
+<!-- exception view -->
+<div id='dashboard-view' class='view hide'>
+	<div class='card-panel transparent np-v'>
+		<h5>Dashboard</h5>
+
+		<div class='row'>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Tests
+					<div class='panel-lead'>21</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Steps
+					<div class='panel-lead'>21</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Start
+					<div class='panel-lead'>Nov 13, 2018 06:51:25 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+			 		End
+			 		<div class='panel-lead'>Nov 13, 2018 07:01:31 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Time Taken
+					<div class='panel-lead'>605,399ms</div>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel dashboard-environment'>
+					<span class='right label cyan white-text'>Environment</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+							<tr>
+								<td>os</td>
+								<td>Linux</td>
+							</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- dashboard view -->
+<!-- testrunner-logs view -->
+		</div>
+		<!-- container -->
+
+		<script>
+			var statusGroup = {
+				passParent: 16,
+				failParent: 5,
+				fatalParent: 0,
+				errorParent: 0,
+				warningParent: 0,
+				skipParent: 0,
+				exceptionsParent: 5,
+				
+				passChild: 16,
+				failChild: 5,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 0,
+				exceptionsChild: 5,
+				
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+		
+			<script src='https://cdn.rawgit.com/anshooarora/extentreports-java/fca20fb7653aade98810546ab96a2a4360e3e712/dist/js/extent.js' type='text/javascript'></script>
+		
+		
+ 		<script type='text/javascript'>
+ 		</script>
+	</body>
+	
+</html>
